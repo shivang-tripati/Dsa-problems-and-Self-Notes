@@ -1,0 +1,28 @@
+// Parent class
+public class Shape {
+    public void draw() {
+        System.out.println("Drawing shape");
+    }
+}
+
+// Subclasses overriding draw() method
+public class Circle extends Shape {
+    @Override
+    public void draw() {
+        System.out.println("Drawing circle");
+    }
+}
+
+public class Rectangle extends Shape {
+    @Override
+    public void draw() {
+        System.out.println("Drawing rectangle");
+    }
+}
+
+// Polymorphic behavior
+Shape shape1 = new Circle();
+shape1.draw(); // Calls draw() method of Circle class
+
+Shape shape2 = new Rectangle();
+shape2.draw(); // Calls draw() method of Rectangle class

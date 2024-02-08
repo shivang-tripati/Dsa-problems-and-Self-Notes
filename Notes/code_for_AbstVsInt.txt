@@ -1,0 +1,100 @@
+Multiple Inheritance:
+
+Interface Example: Suppose we have an interface Drawable that defines a method draw() and another interface Moveable with a method move(). 
+Now, a class Shape can implement both Drawable and Moveable.
+
+// **code
+interface Drawable {
+    void draw();
+}
+
+interface Moveable {
+    void move();
+}
+
+class Shape implements Drawable, Moveable {
+    public void draw() {
+        // Draw the shape
+    }
+
+    public void move() {
+        // Move the shape
+    }
+}
+
+Abstract Class Example: Suppose we have an abstract class Animal with a method eat() and another abstract class Vehicle with a method drive(). 
+Now, a class Car can extend Vehicle and provide its implementation of drive(), but it cannot also extend Animal as Java does not allow multiple inheritance of classes.
+
+Contractual Agreements:
+
+Interface Example: Consider the Comparable interface in Java, which defines a single method compareTo().
+ Any class that implements Comparable promises to provide a way to compare objects of that class.
+
+// **code
+interface Comparable<T> {
+    int compareTo(T o);
+}
+
+class Person implements Comparable<Person> {
+    private String name;
+
+    public int compareTo(Person otherPerson) {
+        return this.name.compareTo(otherPerson.name);
+    }
+}
+
+Abstract Class Example: Suppose we have an abstract class Shape with an abstract method calculateArea(). 
+Any subclass of Shape must provide its implementation of calculateArea() to fulfill the contractual agreemen
+
+
+Versioning and Evolution:
+
+Interface Example: Imagine an interface Logger with a method log(String message).
+  Now, if we want to add a new method logError(String errorMessage), we can extend the Logger interface without breaking existing implementations.
+
+// **code part
+interface Logger {
+    void log(String message);
+}
+
+interface ErrorLogger extends Logger {
+    void logError(String errorMessage);
+}
+
+Abstract Class Example: Suppose we have an abstract class DatabaseConnection with methods for connecting and disconnecting from a database.
+ If we need to change the connection mechanism, we might need to modify the abstract class, potentially impacting existing subclasses.
+
+Composition over Inheritance:
+
+Interface Example: Consider an interface Resizable with a method resize().
+ Now, a class ResizableWindow can implement Resizable to provide resizable behavior, while also extending Window to maintain its window functionality.
+
+// **code 
+
+interface Resizable {
+    void resize();
+}
+
+class ResizableWindow extends Window implements Resizable {
+    public void resize() {
+        // Resize the window
+    }
+}
+
+Abstract Class Example: Suppose we have an abstract class Vehicle with methods for starting and stopping the engine. 
+If we want to model a Car, it might extend Vehicle to inherit these behaviors.
+
+Marker Interfaces:
+
+Interface Example: The java.io.Serializable interface in Java is a marker interface. 
+Classes that implement Serializable indicate that their objects can be serialized.
+
+class MyClass implements Serializable {
+    // MyClass implementation
+}
+
+class MyClass implements Serializable {
+    // MyClass implementation
+}
+
+These examples demonstrate how interfaces and abstract classes are used in different scenarios to achieve specific goals and address various design considerations in Java programming

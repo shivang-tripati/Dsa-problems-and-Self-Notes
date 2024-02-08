@@ -1,0 +1,19 @@
+public class Car {
+    private String model;
+    private String color;
+    
+    public Car(String model, String color) {
+        this.model = model;
+        this.color = color;
+    }
+    
+    public void start() {
+        System.out.println("Car started");
+    }
+    
+    // Getters and setters
+}
+
+// Creating objects of class Car
+Car myCar = new Car("Toyota", "Red");
+myCar.start();

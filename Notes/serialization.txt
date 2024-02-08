@@ -1,0 +1,35 @@
+What is serializable in java and  class can be serialized what does it mean, when & why we should do this
+
+
+In Java, serialization refers to the process of converting an object into a byte stream, which can then be saved to a file, sent over a network, or stored in a database. This byte stream contains the object's data as well as information about the object's type and the types of its instance variables
+To make a class serializable in Java, you need to implement the java.io.Serializable interface. 
+ This interface acts as a marker interface, meaning it doesn't contain any methods. Instead, its presence indicates to the Java runtime that instances of the class can be serialized.
+
+Here's an example of a class implementing Serializable:
+
+import java.io.Serializable;
+
+public class MyClass implements Serializable {
+    private int id;
+    private String name;
+    
+    // constructor, getters, setters...
+}
+
+When should you serialize an object? There are several scenarios
+
+Persistence: You might want to save the state of an object to a file or a database so that it can be retrieved later.
+             For example, saving user preferences in an application or storing game state in a video game.
+            
+Communication: If you need to send objects across a network, 
+               serialization allows you to convert them into a format that can be transmitted efficiently.
+
+Caching: Sometimes it's beneficial to cache objects to improve performance.
+        Serialization allows you to store objects in a serialized form and later deserialize them when needed.
+
+Deep Copying: Serialization can be used to create deep copies of objects by serializing them and then deserializing them. 
+              This process effectively creates a new instance of the object with the same state as the original
+
+
+note:- However, it's essential to be cautious when serializing objects, especially in distributed systems or when dealing with sensitive data, as it can introduce security vulnerabilities if not done properly. 
+       Additionally, not all objects can be serialized, such as objects that contain non-serializable fields or objects with transient fields.          

@@ -1,0 +1,98 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Permutations",
+            "request": "launch",
+            "mainClass": "leetcode.Permutations",
+            "projectName": "DSA JAVA_583ac5da"
+        },
+        {
+            "type": "java",
+            "name": "JobScheduling",
+            "request": "launch",
+            "mainClass": "leetcode.JobScheduling",
+            "projectName": "DSA JAVA_583ac5da"
+        },
+        {
+            "type": "java",
+            "name": "Dice_throw",
+            "request": "launch",
+            "mainClass": "Dice_throw",
+            "projectName": "DSA JAVA_583ac5da"
+        },
+        {
+            "type": "java",
+            "name": "genrateParatheses",
+            "request": "launch",
+            "mainClass": "leetcode.genrateParatheses",
+            "projectName": "DSA JAVA_583ac5da"
+        },
+        {
+            "type": "java",
+            "name": "LetterCombination",
+            "request": "launch",
+            "mainClass": "leetcode.LetterCombination",
+            "projectName": "DSA JAVA_583ac5da"
+        },
+        {
+            "type": "java",
+            "name": "KnuthMorrisPratt",
+            "request": "launch",
+            "mainClass": "Algorithems.KnuthMorrisPratt",
+            "projectName": "DSA JAVA_583ac5da"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "Algorithems.Main",
+            "projectName": "DSA JAVA_583ac5da"
+        },
+        {
+            "type": "java",
+            "name": "RabinKarp",
+            "request": "launch",
+            "mainClass": "Algorithems.RabinKarp",
+            "projectName": "DSA JAVA_583ac5da"
+        },
+        {
+            "type": "java",
+            "name": "Attach",
+            "request": "attach",
+            "hostName": "localhost",
+            "port": "<debug port of the debuggee>"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "Main",
+            "projectName": "DSA JAVA_583ac5da"
+        },
+        {
+            "type": "java",
+            "name": "Sub_Set_Seq",
+            "request": "launch",
+            "mainClass": "Recursion.String.Sub_Set_Seq",
+            "projectName": "DSA JAVA_583ac5da"
+        },
+        {
+            "type": "java",
+            "name": "Main(1)",
+            "request": "launch",
+            "mainClass": "leetcode.Main",
+            "projectName": "DSA JAVA_583ac5da"
+        }
+    ]
+}
