@@ -1,0 +1,11 @@
+# Default ignored files
+
+# IDE files (Eclipse, IntelliJ, NetBeans)
+.idea/
+.vscode
+
+# Compiled class files
+*.class
+
+# Log files
+*.log
