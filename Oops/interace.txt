@@ -1,0 +1,35 @@
+// Interface defining a contract
+interface Animal {
+    void eat();
+}
+
+// Another interface
+interface Sleepable {
+    void sleep();
+}
+
+// Class implementing multiple interfaces
+class Dog implements Animal, Sleepable {
+    @Override
+    public void eat() {
+        System.out.println("Dog is eating");
+    }
+
+    @Override
+    public void sleep() {
+        System.out.println("Dog is sleeping");
+    }
+}
+
+// Usage of interfaces
+public class Main {
+    public static void main(String[] args) {
+        Animal myDog = new Dog();
+        myDog.eat(); // Polymorphic behavior
+        //myDog.sleep(); // Compiler error since Animal interface doesn't have sleep method
+
+        Sleepable myDog2 = new Dog();
+        myDog2.sleep(); // Polymorphic behavior
+        //myDog2.eat(); // Compiler error since Sleepable interface doesn't have eat method
+    }
+}

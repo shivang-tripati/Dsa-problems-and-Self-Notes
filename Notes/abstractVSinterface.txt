@@ -1,0 +1,22 @@
+
+Interfaces and abstract classes serve different purposes in Java, although they can sometimes achieve similar goals. Here's why interfaces exist alongside abstract classes
+Multiple Inheritance: Java does not support multiple inheritance of classes, meaning a class can only inherit from one superclass. However, a class can implement multiple interfaces.
+         Interfaces allow a class to define a contract for behavior without inheriting any implementation. This enables a class to exhibit polymorphic behavior with multiple types, which is not possible with abstract classes.
+
+Contractual Agreements: Interfaces are often used to define contractual agreements. They specify a set of methods that implementing classes must provide. By implementing an interface, a class guarantees that it will provide certain functionalities, 
+           regardless of its actual implementation. This facilitates loose coupling and enhances code maintainability
+
+Versioning and Evolution: Interfaces provide a clear separation between contracts and implementations. If the requirements change or new functionalities need to be added, interfaces can be extended without impacting existing implementations.
+           This promotes flexibility and adaptability in evolving software systems
+check -> https://chat.openai.com/share/85860ca4-3c9b-450b-8da2-57a4f1acdc94           
+
+Composition over Inheritance: While abstract classes promote code reuse through inheritance, interfaces encourage composition. By implementing interfaces, classes can fulfill multiple roles and collaborate with different types of objects. 
+           This promotes a design principle known as "favoring composition over inheritance," which often leads to more flexible and modular code
+
+Marker Interfaces: Interfaces can act as marker interfaces, which do not contain any methods but serve as a marker for a certain capability or behavior. 
+       For example, the Serializable interface in Java is used to indicate that a class can be serialized.
+
+
+In contrast, abstract classes are used to provide a common base implementation for subclasses, but they cannot offer the flexibility and multiple inheritance capabilities that interfaces provide. 
+Abstract classes are useful when you want to share code among closely related classes and provide a partial implementation of a class.
+However, they tie the subclass to a specific inheritance hierarchy, which can limit flexibility compared to interfaces.   

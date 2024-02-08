@@ -1,0 +1,26 @@
+// Interface defining a contract
+public interface Shape {
+    void draw();
+}
+
+// Concrete classes implementing the Shape interface
+public class Circle implements Shape {
+    @Override
+    public void draw() {
+        System.out.println("Drawing circle");
+    }
+}
+
+public class Rectangle implements Shape {
+    @Override
+    public void draw() {
+        System.out.println("Drawing rectangle");
+    }
+}
+
+// Usage of abstraction
+Shape shape1 = new Circle();
+shape1.draw(); // Polymorphic behavior
+
+Shape shape2 = new Rectangle();
+shape2.draw(); // Polymorphic behavior
