@@ -1,0 +1,16 @@
+keep in mind that .gitignore will not ignore files that have already been committed to a repository. 
+If you want to ignore a file that is already tracked by Git, you will need to delete the file from your repository and then add it to your .gitignore file.
+
+Unstage changes (if not committed yet):
+If you've made changes but haven't committed them yet, and you want to undo those changes and revert your files to their state at the last commit, 
+you can use the following command:
+git reset --hard
+This command will remove all changes since the last commit and reset your working directory to match the last committed
+
+Discard changes to specific files:
+If you want to discard changes to specific files and revert them to their state at the last commit,
+ you can use the following command:
+ git checkout -- <file>
+ Replace <file> with the name of the file you want to revert. This command will discard any changes made to that file since the last commit.
+
+

@@ -10,4 +10,4 @@
 # Log files
 *.log
 
-out/production/
+*out/production/
