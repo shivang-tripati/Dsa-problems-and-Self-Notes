@@ -1,0 +1,229 @@
+import java.util.ArrayList;
+import java.util.List;
+
+// Interface for Account
+interface Account {
+    void deposit(double amount);
+    void withdraw(double amount) throws InsufficientFundsException;
+    double getBalance();
+}
+
+// Abstract class for AccountType
+abstract class AccountType implements Account {
+    protected String accountNumber;
+    protected double balance;
+    protected double interestRate;
+
+    public AccountType(String accountNumber, double balance, double interestRate) {
+        this.accountNumber = accountNumber;
+        this.balance = balance;
+        this.interestRate = interestRate;
+    }
+}
+
+// Concrete class for SavingsAccount
+class SavingsAccount extends AccountType {
+    private double minimumBalance;
+
+    public SavingsAccount(String accountNumber, double balance, double interestRate, double minimumBalance) {
+        super(accountNumber, balance, interestRate);
+        this.minimumBalance = minimumBalance;
+    }
+
+    @Override
+    public void deposit(double amount) {
+        balance += amount;
+    }
+
+    @Override
+    public void withdraw(double amount) throws InsufficientFundsException {
+        if (balance - amount >= minimumBalance) {
+            balance -= amount;
+        } else {
+            throw new InsufficientFundsException("Insufficient funds or below minimum balance.");
+        }
+    }
+
+    @Override
+    public double getBalance() {
+        return balance;
+    }
+}
+
+// Concrete class for CheckingAccount
+class CheckingAccount extends AccountType {
+    private double transactionFee;
+
+    public CheckingAccount(String accountNumber, double balance, double interestRate, double transactionFee) {
+        super(accountNumber, balance, interestRate);
+        this.transactionFee = transactionFee;
+    }
+
+    @Override
+    public void deposit(double amount) {
+        balance += amount;
+    }
+
+    @Override
+    public void withdraw(double amount) throws InsufficientFundsException {
+        if (balance - amount >= 0) {
+            balance -= amount + transactionFee;
+        } else {
+            throw new InsufficientFundsException("Insufficient funds.");
+        }
+    }
+
+    @Override
+    public double getBalance() {
+        return balance;
+    }
+}
+
+// Exception class for InsufficientFundsException
+class InsufficientFundsException extends Exception {
+    public InsufficientFundsException(String message) {
+        super(message);
+    }
+}
+
+// Interface for BankObserver
+interface BankObserver {
+    void update(Transaction transaction);
+}
+
+// Concrete class for Customer
+class Customer implements BankObserver {
+    private String name;
+    private String accountNumber;
+    private double balance;
+
+    public Customer(String name, String accountNumber, double balance) {
+        this.name = name;
+        this.accountNumber = accountNumber;
+        this.balance = balance;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    @Override
+    public void update(Transaction transaction) {
+        if (transaction.getType().equals("Deposit")) {
+            balance += transaction.getAmount();
+        } else if (transaction.getType().equals("Withdrawal")) {
+            balance -= transaction.getAmount();
+        }
+    }
+}
+
+// Interface for BankSubject
+interface BankSubject {
+    void registerObserver(BankObserver observer);
+    void removeObserver(BankObserver observer);
+    void notifyObservers(Transaction transaction);
+}
+
+// Concrete class for Bank
+class Bank implements BankSubject {
+    private List<Customer> customers;
+    private List<Account> accounts;
+    private List<BankObserver> observers;
+
+    public Bank() {
+        customers = new ArrayList<>();
+        accounts = new ArrayList<>();
+        observers = new ArrayList<>();
+    }
+
+    public void addCustomer(Customer customer) {
+        customers.add(customer);
+    }
+
+    public Customer findCustomer(String name) {
+        for (Customer customer : customers) {
+            if (customer.getName().equals(name)) {
+                return customer;
+            }
+        }
+        return null; // Customer not found
+    }
+
+    public void createAccount(Account account) {
+        accounts.add(account);
+    }
+
+    @Override
+    public void registerObserver(BankObserver observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(BankObserver observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers(Transaction transaction) {
+        for (BankObserver observer : observers) {
+            observer.update(transaction);
+        }
+    }
+
+    public void deposit(String accountNumber, double amount) {
+        for (Account account : accounts) {
+            if (account.getAccountNumber().equals(accountNumber)) {
+                account.deposit(amount);
+                notifyObservers(new Transaction("Deposit", amount, accountNumber));
+                break;
+            }
+        }
+    }
+
+    public void withdraw(String accountNumber, double amount) {
+        for (Account account : accounts) {
+            if (account.getAccountNumber().equals(accountNumber)) {
+                try {
+                    account.withdraw(amount);
+                    notifyObservers(new Transaction("Withdrawal", amount, accountNumber));
+                } catch (InsufficientFundsException e) {
+                    System.out.println(e.getMessage());
+                }
+                break;
+            }
+        }
+    }
+}
+
+// Class for Transaction
+class Transaction {
+    private String type;
+    private double amount;
+    private String accountNumber;
+
+    public Transaction(String type, double amount, String accountNumber) {
+        this.type = type;
+        this.amount = amount;
+        this.accountNumber = accountNumber;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+}

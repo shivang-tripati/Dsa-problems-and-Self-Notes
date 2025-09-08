@@ -1,0 +1,267 @@
+import java.util.*;
+
+// Enum for account types
+enum AccountType {
+    SAVINGS, CHECKING, LOAN
+}
+
+// Interface for accounts
+interface Account {
+    void deposit(double amount);
+    void withdraw(double amount) throws InsufficientFundsException;
+    double getBalance();
+    String getAccountNumber();
+    void addTransaction(Transaction transaction);
+}
+
+// Abstract class for common account functionalities
+abstract class BaseAccount implements Account {
+    private String accountNumber;
+    private double balance;
+    private double interestRate;
+    private List<Transaction> transactions;
+
+    public BaseAccount(String accountNumber, double balance, double interestRate) {
+        this.accountNumber = accountNumber;
+        this.balance = balance;
+        this.interestRate = interestRate;
+        this.transactions = new ArrayList<>();
+    }
+
+    public void deposit(double amount) {
+        balance += amount;
+        addTransaction(new Transaction("Deposit", amount));
+    }
+
+    public void withdraw(double amount) throws InsufficientFundsException {
+        if (balance < amount) {
+            throw new InsufficientFundsException("Insufficient funds");
+        }
+        balance -= amount;
+        addTransaction(new Transaction("Withdrawal", amount));
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void addTransaction(Transaction transaction) {
+        transactions.add(transaction);
+    }
+
+    // Abstract method for calculating interest
+    public abstract double calculateInterest();
+}
+
+// SavingsAccount class
+class SavingsAccount extends BaseAccount {
+    private double minimumBalance;
+
+    public SavingsAccount(String accountNumber, double balance, double interestRate, double minimumBalance) {
+        super(accountNumber, balance, interestRate);
+        this.minimumBalance = minimumBalance;
+    }
+
+    public void withdraw(double amount) throws InsufficientFundsException {
+        if (getBalance() - amount < minimumBalance) {
+            throw new InsufficientFundsException("Insufficient funds or below minimum balance");
+        }
+        super.withdraw(amount);
+    }
+
+    public double calculateInterest() {
+        return getBalance() * getInterestRate();
+    }
+}
+
+// CheckingAccount class
+class CheckingAccount extends BaseAccount {
+    private double transactionFee;
+
+    public CheckingAccount(String accountNumber, double balance, double interestRate, double transactionFee) {
+        super(accountNumber, balance, interestRate);
+        this.transactionFee = transactionFee;
+    }
+
+    public void withdraw(double amount) throws InsufficientFundsException {
+        super.withdraw(amount + transactionFee);
+    }
+
+    public double calculateInterest() {
+        // Checking accounts typically don't earn interest
+        return 0;
+    }
+}
+
+// LoanAccount class
+class LoanAccount extends BaseAccount {
+    public LoanAccount(String accountNumber, double balance, double interestRate) {
+        super(accountNumber, balance, interestRate);
+    }
+
+    public double calculateInterest() {
+        // Implement interest calculation for loans
+        return 0;
+    }
+}
+
+// Bank class
+class Bank {
+    private Map<String, Customer> customers;
+    private Map<String, Account> accounts;
+    private List<Transaction> transactions;
+
+    public Bank() {
+        this.customers = new HashMap<>();
+        this.accounts = new HashMap<>();
+        this.transactions = new ArrayList<>();
+    }
+
+    // Methods for customer management
+    public void addCustomer(Customer customer) {
+        customers.put(customer.getId(), customer);
+    }
+
+    public Customer findCustomer(String id) {
+        return customers.get(id);
+    }
+
+    // Methods for account management
+    public void createAccount(AccountType type, String customerId, double initialBalance, double interestRate, double feeOrMinimum) {
+        Customer customer = findCustomer(customerId);
+        if (customer == null) {
+            throw new IllegalArgumentException("Customer not found");
+        }
+
+        String accountNumber = generateAccountNumber();
+        Account account;
+        switch (type) {
+            case SAVINGS:
+                account = new SavingsAccount(accountNumber, initialBalance, interestRate, feeOrMinimum);
+                break;
+            case CHECKING:
+                account = new CheckingAccount(accountNumber, initialBalance, interestRate, feeOrMinimum);
+                break;
+            case LOAN:
+                account = new LoanAccount(accountNumber, initialBalance, interestRate);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid account type");
+        }
+        accounts.put(accountNumber, account);
+        customer.addAccount(accountNumber);
+    }
+
+    // Methods for transactions
+    public void deposit(String accountNumber, double amount) {
+        Account account = accounts.get(accountNumber);
+        if (account == null) {
+            throw new IllegalArgumentException("Account not found");
+        }
+        account.deposit(amount);
+        transactions.add(new Transaction(accountNumber, "Deposit", amount));
+    }
+
+    public void withdraw(String accountNumber, double amount) throws InsufficientFundsException {
+        Account account = accounts.get(accountNumber);
+        if (account == null) {
+            throw new IllegalArgumentException("Account not found");
+        }
+        account.withdraw(amount);
+        transactions.add(new Transaction(accountNumber, "Withdrawal", amount));
+    }
+
+    // Other methods for transaction and report generation
+
+    private String generateAccountNumber() {
+        // Generate unique account numbers
+        return UUID.randomUUID().toString();
+    }
+}
+
+// Customer class
+class Customer {
+    private String id;
+    private String name;
+    private List<String> accountNumbers;
+
+    public Customer(String id, String name) {
+        this.id = id;
+        this.name = name;
+        this.accountNumbers = new ArrayList<>();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<String> getAccountNumbers() {
+        return Collections.unmodifiableList(accountNumbers);
+    }
+
+    public void addAccount(String accountNumber) {
+        accountNumbers.add(accountNumber);
+    }
+}
+
+// Transaction class
+class Transaction {
+    private String accountNumber;
+    private String type;
+    private double amount;
+    private Date timestamp;
+
+    public Transaction(String accountNumber, String type, double amount) {
+        this.accountNumber = accountNumber;
+        this.type = type;
+        this.amount = amount;
+        this.timestamp = new Date();
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+}
+
+// Custom exception for insufficient funds
+class InsufficientFundsException extends Exception {
+    public InsufficientFundsException(String message) {
+        super(message);
+    }
+}
+
+// Employee class
+class Employee {
+    private String username;
+    private String password;
+    // You can add authorization levels as required
+
+    public Employee(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public boolean authenticate(String username, String password) {
+        return this.username.equals(username) && this.password.equals(password);
+    }
+}

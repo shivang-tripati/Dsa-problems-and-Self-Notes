@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "Algorithems.GraphTheory.Main",
+            "projectName": "DSA JAVA_583ac5da"
+        },
+        {
+            "type": "java",
+            "name": "Graph",
+            "request": "launch",
+            "mainClass": "Algorithems.GraphTheory.Graph",
+            "projectName": "DSA JAVA_583ac5da"
+        },
+        {
+            "type": "java",
             "name": "Nknights",
             "request": "launch",
             "mainClass": "leetcode.backtrack.Nknights",
